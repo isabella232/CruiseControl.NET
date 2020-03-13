@@ -202,15 +202,13 @@
   </xs:complexType>
 
   <xs:complexType name="ldapUser">
-    <xs:all>
-      <xs:element name="domain" type="String" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The AD domain to use.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:all>
+    <xs:attribute name="domain" type="String" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          The AD domain to use.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:attribute name="name" type="String" use="required">
       <xs:annotation>
         <xs:documentation>
@@ -218,6 +216,7 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
+
   </xs:complexType>
 
   <xs:complexType name="passwordUser">
@@ -333,29 +332,27 @@
   </xs:complexType>
 
   <xs:complexType name="xmlFileAudit">
-    <xs:all>
-      <xs:element name="location" type="String" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The location to log the audit events.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="success" type="xs:boolean" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            Whether to log successful events or not.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="failure" type="xs:boolean" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            Whether to log failed events or not.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:all>
+    <xs:attribute name="location" type="String" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The location to log the audit events.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="success" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          Whether to log successful events or not.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="failure" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          Whether to log failed events or not.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="auditReader" abstract="true"/>
@@ -1287,19 +1284,20 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ProjectAuthorisation" abstract="true"/>
+  <xs:complexType name="ProjectAuthorisation" abstract="true">
+    <xs:attribute name="defaultRight" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The default right to use.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
 
   <xs:complexType name="defaultProjectSecurity">
     <xs:complexContent>
       <xs:extension base="ProjectAuthorisation">
         <xs:all>
-          <xs:element name="defaultRight" type="SecurityRight" minOccurs="0" maxOccurs="1">
-            <xs:annotation>
-              <xs:documentation>
-                The default right to use.
-              </xs:documentation>
-            </xs:annotation>
-          </xs:element>
           <xs:element name="permissions" type="permissions" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation>
@@ -8903,71 +8901,69 @@
   </xs:complexType>
 
   <xs:complexType name="permission">
-    <xs:all>
-      <xs:element name="defaultRight" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The default right to use.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="sendMessage" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to send messages.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="forceBuild" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right for force or abort builds.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="startProject" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to stop and start projects.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="changeProject" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to change the configuration of projects.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="viewSecurity" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to view security.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="modifySecurity" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to modify security.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="viewProject" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to view a project.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="viewConfiguration" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to view configuration and logs.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:all>
+    <xs:attribute name="defaultRight" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The default right to use.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="sendMessage" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to send messages.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="forceBuild" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right for force or abort builds.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="startProject" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to stop and start projects.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="changeProject" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to change the configuration of projects.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="viewSecurity" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to view security.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="modifySecurity" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to modify security.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="viewProject" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to view a project.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="viewConfiguration" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to view configuration and logs.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="rolePermission">
@@ -8990,70 +8986,70 @@
           </xs:choice>
         </xs:complexType>
       </xs:element>
-      <xs:element name="defaultRight" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The default right to use.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="sendMessage" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to send messages.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="forceBuild" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right for force or abort builds.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="startProject" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to stop and start projects.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="changeProject" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to change the configuration of projects.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="viewSecurity" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to view security.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="modifySecurity" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to modify security.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="viewProject" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to view a project.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="viewConfiguration" type="SecurityRight" minOccurs="0" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The right to view configuration and logs.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
     </xs:all>
+    <xs:attribute name="defaultRight" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The default right to use.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="sendMessage" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to send messages.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="forceBuild" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right for force or abort builds.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="startProject" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to stop and start projects.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="changeProject" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to change the configuration of projects.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="viewSecurity" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to view security.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="modifySecurity" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to modify security.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="viewProject" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to view a project.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="viewConfiguration" type="SecurityRight" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The right to view configuration and logs.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:attribute name="name" type="String" use="required">
       <xs:annotation>
         <xs:documentation>
@@ -9092,15 +9088,13 @@
   </xs:complexType>
 
   <xs:complexType name="userName">
-    <xs:all>
-      <xs:element name="name" type="String" minOccurs="1" maxOccurs="1">
-        <xs:annotation>
-          <xs:documentation>
-            The name of the user.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:all>
+    <xs:attribute name="name" type="String" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          The name of the user.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:simpleType name="AntsTraceLevel">
